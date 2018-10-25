@@ -1,161 +1,164 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" />
-<title>Canvas Layers Test</title>
+<title>CSS 3 Basic Animation</title>
 </head>
-
-<!-- 
-
-FULLPAGE CANVAS DAN CANVAS LAYERING
-
-Step 1:
-Setting layer menggunakan CSS. Pengaturan ini akan membuat posisi canvas seperti layer yang bertumpuk.
-z-index paling rendah menunjukkan posisi layer berada paling belakang.
-
-Step-2:
-Menyusun objek dalam formasi melingkar
-
-Step-3
-Menyusun objek dalam formasi melingkar dan random
-
-Step-4
-Menganimasikan Formasi objek
-
-@created by farid.suryanto@is.uad.ac.id
- -->
 
 <style type="text/css">
 body{
-	position: relative;
-	margin: 0px;
+	background-color: #ccc;
+	overflow: hidden;
 }
-#layer1{
-	z-index: 1;
+
+.main-image{
+	position: absolute; 
+	left: 50%;
+	top: 50%;
+   width: 300px; 
+   height: 300px;	
+	margin-left: -150px;
+	margin-top: -150px;	  
+   z-index: 5;
+}
+
+.circle-1{
+	position: absolute; 
+	left: 50%;
+	top: 50%;
+   width: 400px; 
+   height: 4000px;	
+	margin-left: -200px;
+	margin-top: -200px;	  
+   z-index: 1;
+}
+
+.box1 {	
+	position: absolute; 
+	left: 50%;
+	top: 50%;
+   width: 380px; 
+   height: 380px;	
+	margin-left: -190px;
+	margin-top: -190px;
+   animation: rotasikanan 5s infinite;
+   z-index: 1;
+}
+
+.box2 {	
+	position: absolute; 
+	left: 50%;
+	top: 50%;
+   width: 350px; 
+   height: 350px;	
+	margin-left: -175px;
+	margin-top: -175px;	
+   animation: rotasikiri 2s infinite;
+   z-index: 2;
+}
+.box3 {	
+	position: absolute; 
+	left: 50%;
+	top: 50%;
+   width: 400px; 
+   height: 400px;	
+	margin-left: -200px;
+	margin-top: -200px;	
+   animation: rotasikanan 4s infinite;
+   z-index: 3;
+}
+
+.box4 {	
+	position: absolute; 
+	left: 50%;
+	top: 50%;
+   width: 610px; 
+   height: 61	0px;	
+	margin-left: -320px;
+	margin-top: -320px;	
+   animation: rotasi 30s infinite;
+   z-index: 0;
+}
+
+.box5 {	
+	position: absolute; 
+	left: 50%;
+	top: 50%;
+   width: 800px; 
+   height: 800px;	
+	margin-left: -400px;
+	margin-top: -400px;	
+   animation: plane 10s infinite;
+   z-index: 0;
+}
+
+.text{
 	position: absolute;
-	width: 100%;
-	
-}
-#layer2{
-	z-index: 3;
-	position: absolute;	
-	width: 100%;	
-}
-
-#layer3{
-	z-index: 2;
-	position: absolute;	
-	width: 100%;
+	right: 50px;
+	bottom: 50px;
 }
 
 
+@keyframes rotasikanan {
+  0% {
+   transform:rotate(0deg);  
+  }
+  60% {
+   	transform:rotate(180deg);  
+  }
+  100% {
+    transform:rotate(360deg);  
+  }
+}
+
+@keyframes rotasikiri {
+  0% {
+   transform:rotate(0deg);  
+  }
+  60% {
+   	transform:rotate(-180deg);  
+  }
+  100% {
+    transform:rotate(360deg);  
+  }
+}
+
+@keyframes rotasi {
+  0% {
+   transform:rotate(0deg);  
+  }
+
+  100% {
+    transform:rotate(360deg);  
+  }
+}
+
+@keyframes plane {
+  0% {
+   transform:rotate(0deg);  
+  }
+
+  100% {
+    transform:rotate(-360deg);  
+  }
+}
 </style>
-<body onresize="init()">
-
-<canvas id="layer1"></canvas>
-<canvas id="layer2"></canvas>
-<canvas id="layer3"></canvas>
-
-<script type="text/javascript" >
-
-//definisikan variabel
-
-var 
-layer1, layer2, layer3,
-ctx1, ctx2, ctx3, screenW, screenH;
 
 
-//fungsi inisial
+<body>
 
-function init() {
-	layer1=document.getElementById('layer1');
-	layer2=document.getElementById('layer2');
-	layer3=document.getElementById('layer3');
-	ctx1=layer1.getContext('2d');
-	ctx2=layer2.getContext('2d');
-	ctx3=layer3.getContext('2d');
-	
-	//menentukan ukuran screen dengan mengambil ukuran layar
-	screenW=window.innerWidth;
-	screenH=window.innerHeight;
-		
-	//mengatur canvas menjadi fullpage
-	layer1.width=screenW;
-	layer1.height=screenH;
-	
-	layer2.width=screenW;
-	layer2.height=screenH;
-	
-	layer3.width=screenW;
-	layer3.height=screenH;
-	
-	
-	
-	//draw layer 1
-	//draw1();
-	
-	//draw layer 2
-	//draw2();
-	
-	//draw layer 3
-	//step-1 tampilkan dulu tanpa setInterval
-	//draw3(3);
-	setInterval(function() {
-		draw(ctx3,550,20,10,40);
-		draw(ctx2,350,30,5,20);
-		draw(ctx1,50,10,50,20);
-	},100);
-	
-}
-
-function draw(contex,radius,circleSize,randomSize,totalObject)
-{
-	contex.clearRect(0,0,screenW,screenH);
-	var total_dot=totalObject;
-	var radius=radius;
-	var dots=[];
-	for (var i=1; i<=total_dot; i++) {		
-		sudut = 360/total_dot*i;		
-		posx = Math.cos(sudut*(Math.PI/180))*radius/2;
-		posy = Math.sin(sudut*(Math.PI/180))*radius/2;
-		
-		
-		var newPosx=posx+(screenW/2);
-		var newPosy=posy+(screenH/2);
-		
-		//posisi tanpa random
-		//var random1=0, random2=0;
-		//randomize position
-		var randSize=20;
-		var random1=Math.floor((Math.random() * randSize) );
-		var random2=Math.floor((Math.random() * randSize) );
-		
-		//membuat objek baru
-		createCircle(contex,newPosx+random1,newPosy+random2,circleSize);
-	}	
-}
+<img src="forest-center.svg" alt="" class="main-image">
 
 
+ <img src="half_circle.svg" alt="" class="box2">
+<!--<img src="half_circle_2.svg" alt="" class="box1">
+<img src="half_circle_3.svg" alt="" class="box3"> -->
+<img src="pohon	.svg" alt="" class="box4">
+<img src="bird.svg" alt="" class="box5">
 
-function createCircle(contex,x,y,size) {
-	//set radius secara random
-	//var rad=Math.floor((Math.random() * 50) +10);
-	//set radius secara konstan
-	//var rad=30;
-	contex.beginPath();
-	contex.arc(x,y,size,0,2*Math.PI);
-	//contex.fillStyle = "blue";
-	//contex.fill()
-	contex.stroke(); 
-
-}
-
-init();
-
-
-
-</script>
-
+<div class="text">
+  menuju tak terbatas dan melampaui nya~
+</div>
 
 </body>
+
 </html>
